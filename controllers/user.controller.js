@@ -14,8 +14,7 @@ export const getUserDetail = async (req, res) => {
     }
 };
 
-// GET LIST OF ALL USERS
-
+// GET ALL USERS
 export const getAllUsers = async (req, res) => {
     try {
         const users = await User.find().select('-password');

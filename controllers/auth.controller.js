@@ -53,17 +53,16 @@ export const loginUser = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
-        // Generate JWT
+
         const token = jwt.sign(
             { id: user._id, email: user.email },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '7d' }
         );
 
         res.cookie('token', token, {
             httpOnly: true,
             secure: true,
-            // sameSite: "strict",
             maxAge: 3600000,
         });
 
