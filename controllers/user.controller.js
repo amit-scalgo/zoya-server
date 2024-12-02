@@ -20,7 +20,6 @@ export const getContactList = async (req, res) => {
         const loggedInUserId = req.user.id;
         const loggedInUser = await User.findById(loggedInUserId);
         const { role, dedicatedSupportUserId } = loggedInUser;
-
         let users = [];
         if (role === 'user') {
             users = await User.find({

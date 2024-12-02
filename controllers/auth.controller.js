@@ -51,7 +51,6 @@ export const loginUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
         // Compare the password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
@@ -69,7 +68,6 @@ export const loginUser = async (req, res) => {
             secure: true,
             maxAge: 3600000,
         });
-
         res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
         console.error('Error in login:', error.message);
