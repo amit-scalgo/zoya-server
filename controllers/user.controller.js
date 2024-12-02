@@ -19,18 +19,18 @@ export const getContactList = async (req, res) => {
     try {
         const loggedInUserId = req.user.id;
         const loggedInUser = await User.findById(loggedInUserId);
-        const loggedInUserRole = loggedInUser.role;
-        const dedicatedSupportUserId = loggedInUser?.dedicatedSupportUserId;
+        const { role, dedicatedSupportUserId } = loggedInUser;
+
         let users = [];
-        if (loggedInUserRole === 'user') {
+        if (role === 'user') {
             users = await User.find({
                 _id: dedicatedSupportUserId,
-                role: { $ne: loggedInUserRole },
+                role: { $ne: role },
             }).select('-password');
-        } else if (loggedInUserRole === 'support') {
+        } else if (role === 'support') {
             users = await User.find({
                 _id: { $ne: loggedInUserId },
-                role: { $ne: loggedInUserRole },
+                role: { $ne: role },
             }).select('-password');
         } else {
             users = await User.find({
