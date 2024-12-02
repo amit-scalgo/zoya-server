@@ -18,9 +18,12 @@ export const getUserDetail = async (req, res) => {
 export const getAllUsers = async (req, res) => {
     try {
         const loggedInUserId = req.user.id;
-        const users = await User.find({ _id: { $ne: loggedInUserId } }).select(
-            '-password'
-        );
+        const loggedInUser = await User.findById(loggedInUserId);
+        const loggedInUserRole = loggedInUser.role;
+        const users = await User.find({
+            _id: { $ne: loggedInUserId },
+            role: { $ne: loggedInUserRole },
+        }).select('-password');
         res.status(200).json(users);
     } catch (error) {
         console.error('Error fetching users:', error.message);
