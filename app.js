@@ -14,7 +14,11 @@ const app = express();
 // Middleware
 app.use(
     cors({
-        origin: ['http://localhost:7777', 'https://zoya-web.vercel.app'],
+        origin: [
+            'http://localhost:7777',
+            'https://zoya-web.vercel.app',
+            'https://zoya-client.vercel.app',
+        ],
         credentials: true,
     })
 );

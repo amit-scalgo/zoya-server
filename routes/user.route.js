@@ -6,5 +6,6 @@ const userRoute = express.Router();
 
 userRoute.get('/profile', verifyToken, getUserDetail);
 userRoute.get('/list', verifyToken, getAllUsers);
+userRoute.get('/supoort-team', verifyToken, getAllUsers);
 
 export default userRoute;
