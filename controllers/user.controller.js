@@ -15,15 +15,28 @@ export const getUserDetail = async (req, res) => {
 };
 
 // GET ALL USERS
-export const getAllUsers = async (req, res) => {
+export const getContactList = async (req, res) => {
     try {
         const loggedInUserId = req.user.id;
         const loggedInUser = await User.findById(loggedInUserId);
         const loggedInUserRole = loggedInUser.role;
-        const users = await User.find({
-            _id: { $ne: loggedInUserId },
-            role: { $ne: loggedInUserRole },
-        }).select('-password');
+        const dedicatedSupportUserId = loggedInUser?.dedicatedSupportUserId;
+        let users = [];
+        if (loggedInUserRole === 'user') {
+            users = await User.find({
+                _id: dedicatedSupportUserId,
+                role: { $ne: loggedInUserRole },
+            }).select('-password');
+        } else if (loggedInUserRole === 'support') {
+            users = await User.find({
+                _id: { $ne: loggedInUserId },
+                role: { $ne: loggedInUserRole },
+            }).select('-password');
+        } else {
+            users = await User.find({
+                _id: { $ne: loggedInUserId },
+            }).select('-password');
+        }
         res.status(200).json(users);
     } catch (error) {
         console.error('Error fetching users:', error.message);

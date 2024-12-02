@@ -17,13 +17,18 @@ export const registerUser = async (req, res) => {
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
+        const supportMembers = await User.find({ role: 'support' });
 
+        // pick random member from this support members
+        const pickRandomSupportUser =
+            supportMembers[Math.floor(Math.random() * supportMembers.length)];
         // Create a new user
         const newUser = await User.create({
             name,
             email,
             password: hashedPassword,
             phoneNumber,
+            dedicatedSupportUserId: pickRandomSupportUser?._id,
         });
 
         res.status(201).json({
