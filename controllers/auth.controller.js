@@ -7,7 +7,7 @@ dotenv.config();
 
 // Register
 export const registerUser = async (req, res) => {
-    const { name, email, password, phoneNumber } = req.body;
+    const { name, email, password, phoneNumber, avatar } = req.body;
     try {
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -29,6 +29,7 @@ export const registerUser = async (req, res) => {
             password: hashedPassword,
             phoneNumber,
             dedicatedSupportUserId: pickRandomSupportUser?._id,
+            avatar: avatar,
         });
 
         res.status(201).json({
