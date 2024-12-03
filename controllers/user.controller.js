@@ -16,9 +16,9 @@ export const getUserDetail = async (req, res) => {
 
 // USER DETAIL API
 export const getUserDetailByid = async (req, res) => {
-    const { id } = req.params;
+    const { uid } = req.params;
     try {
-        const user = await User.findById(id).select('-password');
+        const user = await User.findById(uid).select('-password');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }

@@ -9,7 +9,7 @@ import { verifyToken } from '../middlewares/auth.middleware.js';
 const userRoute = express.Router();
 
 userRoute.get('/profile', verifyToken, getUserDetail);
-userRoute.get('/user/:id', verifyToken, getUserDetailByid);
+userRoute.get('/detail/:uid', verifyToken, getUserDetailByid);
 userRoute.get('/list', verifyToken, getContactList);
 
 export default userRoute;

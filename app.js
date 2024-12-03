@@ -58,8 +58,8 @@ io.on('connection', (socket) => {
     global.chatSocket = socket;
     socket.on('add-user', (userId) => {
         onlineUsers.set(userId, socket.id);
-        console.log(`User added: ${userId}`);
-        console.log('Current online users:', Array.from(onlineUsers.keys()));
+        // console.log(`User added: ${userId}`);
+        // console.log('Current online users:', Array.from(onlineUsers.keys()));
         socket.emit('online-users', {
             onlineUsers: Array.from(onlineUsers.keys()),
         });
